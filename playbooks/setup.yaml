@@ -1,0 +1,96 @@
+- hosts: all
+  tasks:
+    - name: Install neovim dependencies
+      pip:
+        name: pynvim
+        extra_args: '--user'
+    - name: Install neovim and zsh
+      package:
+        name:
+          - neovim
+          - zsh
+          - mozilla-fira-mono-fonts.noarch
+          - ripgrep
+      become: true
+    - name: Create neovim config dir
+      file:
+        path: ~/.config/nvim
+        state: directory
+        recurse: true
+    - name: Dump neovim config file
+      copy:
+        src: config/init.vim
+        dest: ~/.config/nvim/init.vim
+    - name: Install vundle
+      git:
+        repo: https://github.com/VundleVim/Vundle.vim.git
+        clone: yes
+        dest: ~/.vim/bundle/Vundle.vim
+    - name: Install vim plugins
+      command: nvim +"PluginInstall" +"qall"
+    - name: Dump zsh config file
+      copy:
+        src: config/zshrc
+        dest: ~/.zshrc
+    - name: Check if oh-my-zsh is installed
+      stat:
+        path: ~/.oh-my-zsh
+      register: oh_my_zsh
+    - name: Install oh-my-zsh
+      shell: sh -c "$(curl -fsSL https://raw.githubusercontent.com/ohmyzsh/ohmyzsh/master/tools/install.sh)"
+      when: not oh_my_zsh.stat.exists
+    - name: Create antigen directory in oh-my-zsh
+      file:
+        path: ~/.oh-my-zsh/plugins/antigen
+        state: directory
+        recurse: true
+    - name: Download antigen
+      get_url:
+        url: https://raw.githubusercontent.com/zsh-users/antigen/master/bin/antigen.zsh
+        dest: ~/.oh-my-zsh/plugins/antigen/antigen.zsh
+    - name: Install i3 and dependencies
+      package:
+        name:
+          - i3
+          - i3status
+          - dmenu
+          - i3lock
+          - xbacklight
+          - feh
+          - compton
+      become: true
+    - name: Create i3 config dir
+      file:
+        path: ~/.config/i3
+        state: directory
+    - name: Dump i3 config file
+      copy:
+        src: config/i3_config
+        dest: ~/.config/i3/config
+    - name: Dump compton config file
+      copy:
+        content: |
+          blur-background = false;
+          blur-background-fixed = true;
+          blur-kern = "7x7box";
+          blur-background-exclude = [
+            "class_g = 'i3-frame'",
+            "window_type = 'dock'",
+            "window_type = 'desktop'",
+            "_GTK_FRAME_EXTENTS@:c"
+          ];
+        dest: ~/.config/compton.conf
+    - name: Clone fzf
+      git:
+        repo: https://github.com/junegunn/fzf.git
+        dest: ~/.fzf
+        clone: yes
+      register: fzf_clone
+    - name: Check if fzf is installed
+      command: ./fzf/bin/fzf --version
+      failed_when: false
+      register: fzf_version
+    - name: Install fzf if clone was made 
+      command: ~/.fzf/install --all
+      when: fzf_clone.after != fzf_clone.before or
+            fzf_version.rc != 0
