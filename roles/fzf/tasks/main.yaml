@@ -1,0 +1,17 @@
+- name: Clone fzf
+  git:
+    repo: https://github.com/junegunn/fzf.git
+    dest: ~/.fzf
+    clone: yes
+  register: fzf_clone
+
+- name: Check if fzf is installed
+  command: ~/.fzf/bin/fzf --version
+  failed_when: false
+  changed_when: false
+  register: fzf_version
+
+- name: Install fzf if clone was made 
+  command: ~/.fzf/install --all
+  when: fzf_clone.after != fzf_clone.before or
+        fzf_version.rc != 0

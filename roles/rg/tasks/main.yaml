@@ -1,0 +1,6 @@
+- name: Install ripgrep
+  package:
+    name:
+      - ripgrep
+  become: true
+

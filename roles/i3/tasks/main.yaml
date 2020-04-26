@@ -1,0 +1,33 @@
+- name: Install i3 and dependencies
+  package:
+    name:
+      - i3
+      - i3status
+      - dmenu
+      - i3lock
+      - xbacklight
+      - feh
+      - compton
+      - mozilla-fira-mono-fonts.noarch
+  become: true
+- name: Create i3 config dir
+  file:
+    path: ~/.config/i3
+    state: directory
+- name: Dump i3 config file
+  copy:
+    src: config
+    dest: ~/.config/i3/config
+- name: Dump compton config file
+  copy:
+    content: |
+      blur-background = false;
+      blur-background-fixed = true;
+      blur-kern = "7x7box";
+      blur-background-exclude = [
+        "class_g = 'i3-frame'",
+        "window_type = 'dock'",
+        "window_type = 'desktop'",
+        "_GTK_FRAME_EXTENTS@:c"
+      ];
+    dest: ~/.config/compton.conf

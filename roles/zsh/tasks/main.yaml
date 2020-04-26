@@ -1,0 +1,30 @@
+- name: Install zsh
+  package:
+    name:
+      - zsh
+  become: yes
+
+- name: Dump zsh config file
+  copy:
+    src: zshrc
+    dest: ~/.zshrc
+
+- name: Check if oh-my-zsh is installed
+  stat:
+    path: ~/.oh-my-zsh
+  register: oh_my_zsh
+
+- name: Install oh-my-zsh
+  shell: sh -c "$(curl -fsSL https://raw.githubusercontent.com/ohmyzsh/ohmyzsh/master/tools/install.sh)"
+  when: not oh_my_zsh.stat.exists
+
+- name: Create antigen directory in oh-my-zsh
+  file:
+    path: ~/.oh-my-zsh/plugins/antigen
+    state: directory
+    recurse: true
+
+- name: Download antigen
+  get_url:
+    url: https://raw.githubusercontent.com/zsh-users/antigen/master/bin/antigen.zsh
+    dest: ~/.oh-my-zsh/plugins/antigen/antigen.zsh

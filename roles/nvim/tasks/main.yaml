@@ -1,0 +1,32 @@
+- name: Install neovim dependencies
+  pip:
+    name: pynvim
+    extra_args: '--user'
+
+- name: Install neovim
+  package:
+    name:
+      - neovim
+  become: yes
+
+- name: Create neovim config dir
+  file:
+    path: ~/.config/nvim
+    state: directory
+    recurse: true
+
+- name: Dump neovim config file
+  copy:
+    src: init.vim
+    dest: ~/.config/nvim/init.vim
+
+- name: Install vundle
+  git:
+    repo: https://github.com/VundleVim/Vundle.vim.git
+    clone: yes
+    dest: ~/.vim/bundle/Vundle.vim
+
+- name: Install vim plugins
+  command: nvim +"PluginInstall" +"qall"
+  changed_when: false
+  no_log: true
