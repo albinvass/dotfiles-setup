@@ -4,6 +4,7 @@
       dnf:
         name: '*'
         state: latest
+        update_cache: yes
       become: yes
   roles:
     - i3

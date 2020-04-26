@@ -10,19 +10,23 @@
     shell: /bin/zsh
   become: yes
 
-- name: Dump zsh config file
-  copy:
-    src: zshrc
-    dest: ~/.zshrc
-
 - name: Check if oh-my-zsh is installed
   stat:
     path: ~/.oh-my-zsh
   register: oh_my_zsh
 
 - name: Install oh-my-zsh
-  shell: sh -c "$(curl -fsSL https://raw.githubusercontent.com/ohmyzsh/ohmyzsh/master/tools/install.sh)"
+  shell: >-
+    sh -c 
+    "$(curl -fsSL
+    https://raw.githubusercontent.com/ohmyzsh/ohmyzsh/master/tools/install.sh)
+    --unattended"
   when: not oh_my_zsh.stat.exists
+
+- name: Dump zsh config file
+  copy:
+    src: zshrc
+    dest: ~/.zshrc
 
 - name: Create antigen directory in oh-my-zsh
   file:
@@ -34,3 +38,10 @@
   get_url:
     url: https://raw.githubusercontent.com/zsh-users/antigen/master/bin/antigen.zsh
     dest: ~/.oh-my-zsh/plugins/antigen/antigen.zsh
+
+- name:  Install antigen plugins
+  shell: source ~/.zshrc
+  args:
+    executable: /bin/zsh
+  register: zsh_output
+  changed_when: zsh_output.stdout

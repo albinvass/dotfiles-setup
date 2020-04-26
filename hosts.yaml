@@ -3,3 +3,7 @@ all:
     laptop:
       ansible_host: 192.168.1.10
       ansible_user: avass
+    work:
+      ansible_host: 192.168.1.18
+      ansible_user: avass
+      ansible_port: 2223
