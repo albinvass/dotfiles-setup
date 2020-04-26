@@ -1,7 +1,19 @@
 - hosts: all
+  pre_tasks:
+    - name: Make sure all packages are up to date
+      dnf:
+        name: '*'
+        state: latest
+      become: yes
   roles:
+    - i3
     - zsh
     - nvim
     - rg
     - fzf
-    - i3
+    - gertty
+  tasks:
+    - name: Install irssi
+      package:
+        name: irssi
+      become: yes

@@ -6,5 +6,4 @@ the following from the repository:
 TODO:
 
 - set Fira Mono as default font
-- set zsh as default shell
 - uninstall gnome-desktop

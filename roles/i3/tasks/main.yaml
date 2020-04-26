@@ -10,14 +10,17 @@
       - compton
       - mozilla-fira-mono-fonts.noarch
   become: true
+
 - name: Create i3 config dir
   file:
     path: ~/.config/i3
     state: directory
+
 - name: Dump i3 config file
   copy:
     src: config
     dest: ~/.config/i3/config
+
 - name: Dump compton config file
   copy:
     content: |
@@ -31,3 +34,21 @@
         "_GTK_FRAME_EXTENTS@:c"
       ];
     dest: ~/.config/compton.conf
+
+- name: Create feh-images
+  file:
+    path: ~/feh-images
+    state: directory
+
+- name: Copy background image
+  copy:
+    src: "( ._.).png"
+    dest: "~/feh-images/( ._.).png"
+
+- name: Create .fehbg
+  copy:
+    content: |
+      #!/bin/sh
+      feh --bg-scale '/home/{{ ansible_user }}/feh-images/( ._.).png'
+    dest: ~/.fehbg
+    mode: u+x

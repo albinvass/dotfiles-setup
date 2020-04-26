@@ -4,6 +4,12 @@
       - zsh
   become: yes
 
+- name: Make zsh default shell
+  user:
+    name: "{{ ansible_user }}"
+    shell: /bin/zsh
+  become: yes
+
 - name: Dump zsh config file
   copy:
     src: zshrc
