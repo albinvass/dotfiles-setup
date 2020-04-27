@@ -84,10 +84,15 @@ set foldmethod=indent
 " If installed using git
 set rtp+=~/.fzf
 
+" Define command Rgb (Ripgrep better)
+" since the default fzf Rg command matches filenames
+command! -bang -nargs=* Rgb
+  \ call fzf#vim#grep("rg --column --line-number --no-heading --color=always --smart-case ".shellescape(<q-args>), 1, {'options': '--delimiter : --nth 4..'}, <bang>0)
+
 let mapleader=","
 nnoremap <leader><space> :nohlsearch<CR>
 nmap <C-p> :FZF<CR>
-nmap <C-e> :Rg<CR>
+nmap <C-e> :Rgb<CR>
 
 " ctrp
 let g:ctrlp_user_command = 'ag %s -l --nocolor --hidden -g ""'
