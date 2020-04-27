@@ -1,4 +1,6 @@
-To set up this environment clone this repository and run install.sh
+To install with curl run the following command:
+
+    sh -c "$(curl -fsSL https://raw.githubusercontent.com/albinvass/dotfiles-setup/master/tools/install.sh)"
 
 TODO:
 
