@@ -10,6 +10,7 @@
     - i3
     - zsh
     - nvim
+    - git
     - rg
     - fzf
     - gertty

@@ -1,0 +1,17 @@
+- name: Ensure git is installed
+  package:
+    name: git
+  become: yes
+
+- name: Configure git
+  command: "git config --global {{ item }}"
+  loop:
+    - core.editor 'nvim'
+    - user.name 'Albin Vass'
+    - user.email 'albin.vass@gmail.com'
+    - color.ui 'auto'
+    - diff.tool 'vimdiff'
+    - grep.linenumber 'true'
+    - color.grep.linenumber  'yellow bold'
+    - color.grep.match 'red'
+    - color.grep.filename 'magenta'
