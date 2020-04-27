@@ -1,0 +1,17 @@
+[gitreview]
+	username = albin_vass
+	username = albin_vass
+[user]
+	name = Albin Vass
+	email = albin.vass@gmail.com
+[core]
+	editor = nvim
+[color]
+	ui = auto
+[grep]
+	linenumber = true
+[color "grep"]
+	linenumber = yellow bold
+	match = red
+	filename = magenta
+
