@@ -26,6 +26,14 @@
     clone: yes
     dest: ~/.vim/bundle/Vundle.vim
 
+
+# We can't easily detect if this changes anything
+# So pretend it doesn't
+- name: Clean vim plugins
+  command: nvim +"PluginClean" +"qall"
+  changed_when: false
+  no_log: true
+
 - name: Install vim plugins
   command: nvim +"PluginInstall" +"qall"
   changed_when: false
