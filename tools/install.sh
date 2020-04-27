@@ -1,5 +1,6 @@
 #!/bin/sh
 
+set -euf -o pipefail
 
 # Thanks ohmyzsh
 # Default settings
@@ -33,6 +34,10 @@ setup_color() {
 	fi
 }
 
+copy_repo() {
+    rsync -r "$REMOTE" "$DOTS"
+}
+
 clone_repo() {
     git clone \
         --branch "$BRANCH"\
@@ -52,19 +57,30 @@ main() {
 	# Parse arguments
 	while [ $# -gt 0 ]; do
 		case $1 in
-            --local) REMOTE=$(dirname $(dirname $0)) ;;
+            --local) REMOTE="$(dirname $(dirname $0))" ;;
+            --copy) CLONE=no; COPY=yes ;;
 		esac
 		shift
 	done
 
-    clone_repo
+    if [ $CLONE = yes ]; then
+        clone_repo
+    elif [ $COPY = yes ]; then
+        if [ "$REMOTE" != "$(dirname $(dirname $0))" ]; then
+            error "--copy only works together with --local"
+            exit 1
+        else
+            copy_repo
+        fi
+    fi
 
     cd "$DOTS"
     pip3 install --user ansible
     export ANSIBLE_ROLES_PATH=roles
     ansible-playbook playbooks/setup.yaml \
         --ask-become-pass \
-        -i hosts.yaml
+        -i hosts.yaml \
+        -vv
 }
 
 main "$@"

@@ -30,11 +30,11 @@
 # We can't easily detect if this changes anything
 # So pretend it doesn't
 - name: Clean vim plugins
-  command: nvim +"PluginClean" +"qall"
+  command: echo "y" | nvim +"PluginClean" +"y" +"qall"
   changed_when: false
   no_log: true
 
 - name: Install vim plugins
-  command: nvim +"PluginInstall" +"qall"
+  command: echo "y" | nvim +"PluginInstall" +"qall"
   changed_when: false
   no_log: true
