@@ -77,7 +77,7 @@ main() {
     cd "$DOTS"
     pip3 install --user ansible
     export ANSIBLE_ROLES_PATH=roles
-    ansible-playbook playbooks/setup.yaml \
+    $HOME/.local/bin/ansible-playbook playbooks/setup.yaml \
         --ask-become-pass \
         -i hosts.yaml \
         -vv
