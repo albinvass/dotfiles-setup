@@ -11,6 +11,20 @@
       - mozilla-fira-mono-fonts.noarch
   become: true
 
+- name: Make sure ~/.fonts exist
+  file:
+    path: ~/.fonts
+    state: directory
+
+- name: Add font awesome
+  copy:
+    src: "fonts/{{ item }}"
+    dest: "~/.fonts/{{ item }}"
+  loop:
+    - Font Awesome 5 Brands-Regular-400.otf
+    - Font Awesome 5 Free-Regular-400.otf
+    - Font Awesome 5 Free-Solid-900.otf
+
 - name: Create i3 config dir
   file:
     path: ~/.config/i3
