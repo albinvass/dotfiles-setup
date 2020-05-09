@@ -38,10 +38,3 @@
   get_url:
     url: https://raw.githubusercontent.com/zsh-users/antigen/master/bin/antigen.zsh
     dest: ~/.oh-my-zsh/plugins/antigen/antigen.zsh
-
-- name:  Install antigen plugins
-  shell: source ~/.zshrc
-  args:
-    executable: /bin/zsh
-  register: zsh_output
-  changed_when: zsh_output.stdout
