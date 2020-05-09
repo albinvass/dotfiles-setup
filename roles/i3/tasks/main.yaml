@@ -9,6 +9,7 @@
       - feh
       - compton
       - mozilla-fira-mono-fonts.noarch
+      - fontawesome-fonts.noarch
   become: true
 
 - name: Make sure ~/.fonts exist
