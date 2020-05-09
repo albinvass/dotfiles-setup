@@ -1,0 +1,4 @@
+- name: Install git-review
+  pip:
+    name: git-review
+    extra_args: --user

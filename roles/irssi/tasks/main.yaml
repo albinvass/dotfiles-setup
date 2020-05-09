@@ -1,0 +1,4 @@
+- name: Install irssi
+  package:
+    name: irssi
+  become: yes
