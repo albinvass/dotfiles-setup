@@ -54,6 +54,12 @@ nnoremap <leader>l :!tox -e linters<CR>
 " Run flake8
 nnoremap <leader>f :w !flake8 /dev/stdin<CR>
 
+" Open new temporary yaml file
+function! MkTemp(filetype)
+  execute 'tabedit +setf\' a:filetype
+endfunction
+nnoremap <leader>ty :call MkTemp("yaml")<CR>
+
 nnoremap <leader><space> :nohlsearch<CR>
 nmap <C-p> :FZF<CR>
 nmap <C-e> :Rg<CR>
