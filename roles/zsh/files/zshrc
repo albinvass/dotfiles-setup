@@ -20,4 +20,9 @@ alias docker=podman
 
 export PATH=$PATH:~/.local/bin
 
+# This enables ansible to detect default
+# roles directory for zuul.
+# Works perfectly with vim-rooter
+export ANSIBLE_ROLES_PATH=roles
+
 [ -f ~/.fzf.zsh ] && source ~/.fzf.zsh
