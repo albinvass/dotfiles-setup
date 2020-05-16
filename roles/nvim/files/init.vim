@@ -43,16 +43,20 @@ set foldnestmax=10
 set foldmethod=indent
 set rtp+=~/.fzf
 
-" Define command Rgb (Ripgrep better)
-" since the default fzf Rg command matches filenames
-command! -bang -nargs=* Rgb
-  \ call fzf#vim#grep("rg --column --line-number --no-heading --color=always --smart-case ".shellescape(<q-args>), 1, {'options': '--delimiter : --nth 4..'}, <bang>0)
-
 let mapleader=","
+" Execute current buffer with ansible-playbook
+nmap <C-a> :w !ansible-playbook /dev/stdin<CR>
+" Same but don't automatically run the command
+nmap <C-q> :w !ansible-playbook /dev/stdin
+
+" tox -e linters
+nnoremap <leader>l :!tox -e linters<CR>
+" Run flake8
+nnoremap <leader>f :w !flake8 /dev/stdin<CR>
+
 nnoremap <leader><space> :nohlsearch<CR>
 nmap <C-p> :FZF<CR>
-nmap <C-e> :Rgb<CR>
+nmap <C-e> :Rg<CR>
 
 " yaml
 autocmd FileType yaml setlocal ts=2 sts=2 sw=2 expandtab
-
