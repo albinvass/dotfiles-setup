@@ -44,10 +44,19 @@ set foldmethod=indent
 set rtp+=~/.fzf
 
 let mapleader=","
-" Execute current buffer with ansible-playbook
-nmap <C-a> :w !ansible-playbook /dev/stdin<CR>
+" execute current file with ansible-playbook
+nmap <leader>aaa :w !ansible-playbook %:p<CR>
+" execute current buffer with ansible-playbook
+nmap <leader>aa :w !ansible-playbook /dev/stdin<CR>
 " Same but don't automatically run the command
-nmap <C-q> :w !ansible-playbook /dev/stdin
+nmap <leader>a :w !ansible-playbook /dev/stdin
+
+" Execute current file with python
+nnoremap <leader>ppp :w !python %:p<CR>
+" Execute current buffer with python
+nnoremap <leader>pp :w !python /dev/stdin<CR>
+" Same but don't automatically run the command
+nnoremap <leader>p :w !python /dev/stdin
 
 " tox -e linters
 nnoremap <leader>l :!tox -e linters<CR>
