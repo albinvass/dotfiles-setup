@@ -1,22 +1,12 @@
 - hosts: all
   vars:
-    initial_run_file: "{{ ansible_user_dir }}/.adots/.ir"
   pre_tasks:
-    - name: Detect if this has been run before
-      stat:
-        path: "{{ initial_run_file }}"
-      register: probe_inital_run 
     - name: Make sure all packages are up to date
       dnf:
         name: '*'
         state: latest
         update_cache: yes
       become: yes
-      when: not probe_inital_run.stat.exists
-    - name: Leave a file to detect that this has already been run on later executes
-      file:
-        path: "{{ initial_run_file }}"
-        state: touch
       when: not probe_inital_run.stat.exists
   roles:
     - i3
