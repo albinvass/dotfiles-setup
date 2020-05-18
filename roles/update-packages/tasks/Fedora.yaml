@@ -1,0 +1,6 @@
+- name: Make sure all packages are up to date
+  dnf:
+    name: '*'
+    state: latest
+    update_cache: yes
+  become: yes

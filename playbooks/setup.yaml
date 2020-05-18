@@ -1,14 +1,6 @@
 - hosts: all
-  vars:
-  pre_tasks:
-    - name: Make sure all packages are up to date
-      dnf:
-        name: '*'
-        state: latest
-        update_cache: yes
-      become: yes
-      when: not probe_inital_run.stat.exists
   roles:
+    - update-packages
     - i3
     - zsh
     - nvim
