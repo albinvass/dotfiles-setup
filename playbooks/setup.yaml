@@ -16,6 +16,7 @@
     - name: Leave a file to detect that this has already been run on later executes
       file:
         path: "{{ initial_run_file }}"
+        state: touch
       when: not probe_inital_run.stat.exists
   roles:
     - i3
